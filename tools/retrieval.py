@@ -1,4 +1,6 @@
-import json
+''' This module handles all functionality to do with retrieving and preparing
+tweets from Twitter's API via a tweepy StreamListener object.
+'''
 import os
 import time
 
@@ -14,6 +16,9 @@ RATE_LIMIT_CODE = 420
 
 
 class IntervalListener(StreamListener):
+    ''' This class extends tweepy.streaming's StreamListener and defines custom
+    behavior of our StreamListener when tweets are received.
+    '''
     def __init__(self, interval_length=60):
         self.start_time = time.time()
         self.interval_length = interval_length
@@ -37,17 +42,23 @@ class IntervalListener(StreamListener):
     def on_error(self, status):
         ''' Defines behavior of listener on non-200 return; just continue
         unless we've hit the rate limit.'''
-        if status_code == RATE_LIMIT_CODE:
+        if status == RATE_LIMIT_CODE:
             return False
         return True
 
     def write_to_file(self, data):
+        ''' Writes data to the current file_path stored to save new data in.
+        '''
         with open(self.file_path.format(self.interval_number), 'a') as f:
             f.write(data)
             return True
 
 
 def start_stream(hashtag=None):
+    ''' This function starts a stream listening for tweets with hashtag=w/e was
+    passed in them. The behavior of the stream upon receiving a tweet is handled
+    by the IntervalListener object passed to the stream.
+    '''
     assert hashtag
     auth = OAuthHandler(CK, CS)
     auth.set_access_token(AT, ATS)

@@ -1,14 +1,9 @@
 FROM python:3.6-slim
 
-WORKDIR /twingiems
+WORKDIR /twitterscraper
 
-ADD . /twingiems
+ADD . /twitterscraper
 
-RUN pip install .
+RUN pip install -e .
 
-EXPOSE 80
-
-ENV FLASK_APP twingiems
-ENV FLASK_DEBUG false
-
-CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]
+RUN python run.py
