@@ -5,6 +5,7 @@ TODO:
 '''
 
 import re
+import time
 
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
@@ -24,6 +25,8 @@ def analyze_tweets(entry_id, tweets):
     '''
     return {
         'entry_id' : entry_id,
+        'unix_time' : int(time.time()),
+        'number_of_tweets' : len(tweets),
         'sentiment' : str(average_sentiment(tweets)),
         'related_hashtag' : most_related_hashtags(tweets),
     }

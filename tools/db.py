@@ -44,12 +44,20 @@ def create_table(dynamodb=None, table=None):
                 'AttributeName': 'entry_id',
                 'AttributeType': 'N',
             },
+            {
+                'AttributeName': 'unix_time',
+                'AttributeType': 'N',
+            }
         ],
         KeySchema=[
             {
                 'AttributeName': 'entry_id',
                 'KeyType': 'HASH',
             },
+            {
+                'AttributeName': 'unix_time',
+                'KeyType': 'RANGE',
+            }
         ],
         ProvisionedThroughput={
             'ReadCapacityUnits': 1,

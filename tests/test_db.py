@@ -14,6 +14,7 @@ TEST_TABLE = 'test_table'
 
 ITEM = {
     'entry_id': 0,
+    'unix_time': 1213,
     'otherstuff': 400,
 }
 
@@ -31,7 +32,7 @@ def test_table():
         table=TEST_TABLE
     )
     assert table1 == table2
-    time.sleep(10) # wait until table create happens
+    time.sleep(1) # wait until table create happens
     table2.put_item(
         Item=ITEM
     )
