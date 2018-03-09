@@ -23,7 +23,7 @@ class IntervalListener(StreamListener):
     ''' This class extends tweepy.streaming's StreamListener and defines custom
     behavior of our StreamListener when tweets are received.
     '''
-    def __init__(self, interval_length=30):
+    def __init__(self, interval_length=600):
         self.start_time = time.time()
         self.interval_length = interval_length
         self.interval_number = 0
