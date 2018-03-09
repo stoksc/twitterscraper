@@ -10,21 +10,20 @@ import time
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-nltk.download('vader_lexicon')
 
+nltk.download('vader_lexicon')
+MODEL = SentimentIntensityAnalyzer()
 REGEX_STR = r'<[^>]+>|(?:@[\w_]+)|(?:\#+[\w_]+[\w\'_\-]*[\w_]+)|\
 http[s]?://(?:[a-z]|[0-9]|[$-_@.&amp;+]|[!*\(\),]|\
 (?:%[0-9a-f][0-9a-f]))+|(?:(?:\d+,?)+(?:\.?\d+)?)'
 
-MODEL = SentimentIntensityAnalyzer()
 
-
-def analyze_tweets(entry_id, tweets):
+def analyze_tweets(keyword: str, tweets: dict) -> dict:
     ''' This function takes a group of tweets and returns statistics
     on them like average sentiment and related hashtags
     '''
     return {
-        'entry_id' : entry_id,
+        'framework' : keyword,
         'unix_time' : int(time.time()),
         'number_of_tweets' : len(tweets),
         'sentiment' : str(average_sentiment(tweets)),
@@ -32,7 +31,7 @@ def analyze_tweets(entry_id, tweets):
     }
 
 
-def most_related_hashtags(tweets):
+def most_related_hashtags(tweets: dict) -> dict:
     ''' Function takes a list of tweets (represented as dictionaries) and
     returns the hashtags that appear most frequently.
     '''
@@ -47,7 +46,7 @@ def most_related_hashtags(tweets):
     return occurences
 
 
-def average_sentiment(tweets):
+def average_sentiment(tweets: dict) -> float:
     ''' Function takes a list of tweets and returns the average
     sentiment of them.
     '''
@@ -58,7 +57,7 @@ def average_sentiment(tweets):
     return total/len(tweets)
 
 
-def clean_text(tweets):
+def clean_text(tweets: dict) -> [str]:
     ''' Takes a dictionary with a text attribute and returns plain text, cleaned
     of emojis, totally safe strings.
     '''

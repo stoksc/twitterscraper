@@ -4,14 +4,18 @@ tweets from Twitter's API via a tweepy StreamListener object.
 import os
 import time
 
-
 import tweepy
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 
-from tools.keys import CK, CS, AT, ATS
 
 
+CK, CS, AT, ATS = (
+    os.environ['TWITTER_CK'],
+    os.environ['TWITTER_CS'],
+    os.environ['TWITTER_AT'],
+    os.environ['TWITTER_ATS'],
+)
 RATE_LIMIT_CODE = 420
 
 
@@ -19,7 +23,7 @@ class IntervalListener(StreamListener):
     ''' This class extends tweepy.streaming's StreamListener and defines custom
     behavior of our StreamListener when tweets are received.
     '''
-    def __init__(self, interval_length=60):
+    def __init__(self, interval_length=30):
         self.start_time = time.time()
         self.interval_length = interval_length
         self.interval_number = 0
@@ -54,23 +58,38 @@ class IntervalListener(StreamListener):
             return True
 
 
-def start_stream(hashtag=None):
+def start_stream(hashtags=None):
     ''' This function starts a stream listening for tweets with hashtag=w/e was
     passed in them. The behavior of the stream upon receiving a tweet is handled
     by the IntervalListener object passed to the stream.
     '''
-    assert hashtag
+    assert hashtags
     auth = OAuthHandler(CK, CS)
     auth.set_access_token(AT, ATS)
     api = tweepy.API(auth)
     stream = tweepy.Stream(auth=api.auth,
                            listener=IntervalListener())
-    stream.filter(track=[hashtag],
+    stream.filter(track=hashtags,
                   async=True)
     return stream
 
 
-def clean_tweet(tweet):
+def seperate_by_keyword(keyword: str, tweets: [dict]) -> [dict]:
+    ''' This function takes a list of tweets and returns the tweets that
+    contain the specified keyword
+    '''
+    filtered_tweets = []
+    for tweet in tweets:
+        if keyword in tweet['text']:
+            filtered_tweets.append(tweet)
+            continue
+        if 'extended_tweet' in tweet:
+            if keyword in tweet['extended_tweet']['full_text']:
+                filtered_tweets.append(tweet)
+    return filtered_tweets
+
+
+def clean_tweet(tweet) -> dict:
     ''' Takes a tweepy tweet object and returns a dictionary that contains
     the information from the tweet that we actually need.
     '''

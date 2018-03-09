@@ -1,10 +1,14 @@
 ''' This module tests the analyze.py module of this program.
 '''
+import os
 
 import pytest
 
+from tools.analyze import analyze_tweets
 from tools.analyze import average_sentiment
 from tools.analyze import clean_text
+
+from tools.files import process_file
 
 
 TEST_TWEETS = [
@@ -14,15 +18,27 @@ TEST_TWEETS = [
     {'text': '0 000000000000000'},
     {'text': ''},
 ]
+FILE_PATHS = [
+    os.path.join(os.getcwd(), 'tests', 'test_data', 'test_data1.json'),
+    os.path.join(os.getcwd(), 'tests', 'test_data', 'test_data2.json'),
+]
+KEYWORDS = [
+    'python',
+    'javascript'
+]
+
 
 def test_clean_text():
-    ''' This function tests the text cleaning regexs in the analyze module.
-    '''
     texts = clean_text(TEST_TWEETS)
 
 
 def test_sentiment_analysis():
-    ''' This function tests the sentiment analysis functionality.
-    '''
     sentiment = average_sentiment(TEST_TWEETS)
     assert type(sentiment) is type(float())
+
+
+def test_total_analysis():
+    for file_path in FILE_PATHS:
+        for keyword in KEYWORDS:
+            tweets = process_file(file_path)
+            analyze_tweets(keyword, tweets)

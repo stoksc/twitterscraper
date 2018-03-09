@@ -8,7 +8,7 @@ import time
 from tools.retrieval import clean_tweet
 
 
-def block_until_file_exists(file_path):
+def block_until_file_exists(file_path: str) -> None:
     ''' Blocks the calling thread of execution until the file at file_path
     exists.
     '''
@@ -16,7 +16,7 @@ def block_until_file_exists(file_path):
         time.sleep(1)
 
 
-def process_file(file_path):
+def process_file(file_path: str) -> dict:
     ''' Reads a file full of JSON entries and picks them out, one by one,
     appending them to an array to return.
     '''

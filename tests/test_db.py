@@ -1,26 +1,25 @@
 ''' This module unit tests tools/db.
 '''
+import os
 import time
 
 import pytest
 
-from tools.keys import AWS_AK, AWS_SK
 from tools.db import get_dynamodb_connection
 from tools.db import get_dynamodb_table
 from tools.db import create_table
 
 
+AWS_AK, AWS_SK = os.environ['AWS_AK'], os.environ['AWS_SK']
 TEST_TABLE = 'test_table'
-
 ITEM = {
-    'entry_id': 0,
+    'framework': 'something',
     'unix_time': 1213,
     'otherstuff': 400,
 }
 
+
 def test_table():
-    ''' Tests tables can be created.
-    '''
     table1 = get_dynamodb_table(
         access_key=AWS_AK,
         secret_key=AWS_SK,
@@ -32,9 +31,10 @@ def test_table():
         table=TEST_TABLE
     )
     assert table1 == table2
-    time.sleep(1) # wait until table create happens
+    time.sleep(5) # wait until table create happens, boto3 is async'd to death
     table2.put_item(
         Item=ITEM
     )
     table2.scan()
+    time.sleep(5) # and again
     table2.delete()

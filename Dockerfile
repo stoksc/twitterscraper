@@ -6,4 +6,4 @@ ADD . /twitterscraper
 
 RUN pip install -e .
 
-CMD ["python", "run.py"]
+CMD ["python", "app.py"]

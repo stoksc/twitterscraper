@@ -4,6 +4,7 @@
 import boto3
 from botocore.exceptions import ClientError
 
+
 def get_dynamodb_table(table=None, access_key=None, secret_key=None):
     ''' This function takes a table name and key pair and returns a dynamodb
     table. If the table already existed, it returns the existing table.
@@ -22,7 +23,6 @@ def get_dynamodb_table(table=None, access_key=None, secret_key=None):
 def get_dynamodb_connection(access_key=None, secret_key=None):
     ''' This function takes an AWS key pair and returns a dynamodb connection.
     '''
-    assert access_key and secret_key
     return boto3.resource(
         'dynamodb',
         region_name='us-east-2',
@@ -36,13 +36,12 @@ def create_table(dynamodb=None, table=None):
     with the provided hashtag as its name. Raises and error to the calling
     function if the table already exists.
     '''
-    assert dynamodb and table
     return dynamodb.create_table(
         TableName=table,
         AttributeDefinitions=[
             {
-                'AttributeName': 'entry_id',
-                'AttributeType': 'N',
+                'AttributeName': 'framework',
+                'AttributeType': 'S',
             },
             {
                 'AttributeName': 'unix_time',
@@ -51,7 +50,7 @@ def create_table(dynamodb=None, table=None):
         ],
         KeySchema=[
             {
-                'AttributeName': 'entry_id',
+                'AttributeName': 'framework',
                 'KeyType': 'HASH',
             },
             {
