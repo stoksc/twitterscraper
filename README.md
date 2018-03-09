@@ -15,7 +15,7 @@ Then just run the program followed by the keywords you want to track:
 
 `python twitterscraper/app.py keyword1 keyword2`
 
-They some poorly selected metadata from the tweets will be stored every 10-minutes into a DynamoDB table.
+Some poorly selected metadata from the tweets will be stored every 10-minutes into a DynamoDB table.
 
 ##### Built With
 
