@@ -5,9 +5,9 @@ import os
 
 import pytest
 
-from tools.retrieval import clean_tweet
-from tools.retrieval import start_stream
-from tools.retrieval import IntervalListener
+from ..twitterscraper.tools.retrieval import clean_tweet
+from ..twitterscraper.tools.retrieval import start_stream
+from ..twitterscraper.tools.retrieval import IntervalListener
 
 
 TEST_HASHTAGS = [

@@ -5,9 +5,9 @@ import time
 
 import pytest
 
-from tools.db import get_dynamodb_connection
-from tools.db import get_dynamodb_table
-from tools.db import create_table
+from ..twitterscraper.tools.db import get_dynamodb_connection
+from ..twitterscraper.tools.db import get_dynamodb_table
+from ..twitterscraper.tools.db import create_table
 
 
 AWS_AK, AWS_SK = os.environ['AWS_AK'], os.environ['AWS_SK']
@@ -31,10 +31,3 @@ def test_table():
         table=TEST_TABLE
     )
     assert table1 == table2
-    time.sleep(5) # wait until table create happens, boto3 is async'd to death
-    table2.put_item(
-        Item=ITEM
-    )
-    table2.scan()
-    time.sleep(5) # and again
-    table2.delete()

@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from tools.files import process_file
+from ..twitterscraper.tools.files import process_file
 
 
 FILE_PATHS = [

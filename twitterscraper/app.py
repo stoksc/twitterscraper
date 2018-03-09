@@ -5,10 +5,10 @@ and
 import os
 import sys
 
-from tools.analyze import analyze_tweets
-from tools.db import get_dynamodb_table
-from tools.files import block_until_file_exists, process_file
-from tools.retrieval import seperate_by_keyword, start_stream
+from .tools.analyze import analyze_tweets
+from .tools.db import get_dynamodb_table
+from .tools.files import block_until_file_exists, process_file
+from .tools.retrieval import seperate_by_keyword, start_stream
 
 
 AWS_AK, AWS_SK = os.environ['AWS_AK'], os.environ['AWS_SK']

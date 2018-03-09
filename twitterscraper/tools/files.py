@@ -5,7 +5,7 @@ import json
 import os
 import time
 
-from tools.retrieval import clean_tweet
+from .retrieval import clean_tweet
 
 
 def block_until_file_exists(file_path: str) -> None:

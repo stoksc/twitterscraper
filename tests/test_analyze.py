@@ -4,11 +4,12 @@ import os
 
 import pytest
 
-from tools.analyze import analyze_tweets
-from tools.analyze import average_sentiment
-from tools.analyze import clean_text
+from ..twitterscraper.tools.analyze import analyze_tweets
+from ..twitterscraper.tools.analyze import analyze_tweets
+from ..twitterscraper.tools.analyze import average_sentiment
+from ..twitterscraper.tools.analyze import clean_text
 
-from tools.files import process_file
+from ..twitterscraper.tools.files import process_file
 
 
 TEST_TWEETS = [
@@ -27,7 +28,6 @@ KEYWORDS = [
     'javascript'
 ]
 
-
 def test_clean_text():
     texts = clean_text(TEST_TWEETS)
 
@@ -37,7 +37,7 @@ def test_sentiment_analysis():
     assert type(sentiment) is type(float())
 
 
-def test_total_analysis():
+def test_total_():
     for file_path in FILE_PATHS:
         for keyword in KEYWORDS:
             tweets = process_file(file_path)
